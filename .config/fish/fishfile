@@ -8,3 +8,4 @@ fisherman/spin
 fisherman/z
 jethrokuan/fzf
 oh-my-fish/plugin-expand
+evanlucas/fish-kubectl-completions
