@@ -75,7 +75,7 @@ dotfiles_download() {
 
   newline
   info "🚀 Downloading dotfiles..."
-  if is_exists "git"; then
+  if is_exists "gita"; then
     git clone --recursive "$DOTFILES_GITHUB" "$DOTPATH"
 
   elif is_exists "curl" || is_exists "wget"; then
