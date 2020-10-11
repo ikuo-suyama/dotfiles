@@ -8,6 +8,10 @@ if [ -z "${DOTPATH:-}" ]; then
   DOTPATH=~/.dotfiles
   export DOTPATH
 fi
+if [ -z "${INSTALL_ANYWAY:-}" ]; then
+  INSTALL_ANYWAY=NO
+  export INSTALL_ANYWAY
+fi
 DOTFILES_GITHUB=https://github.com/ikuo-suyama/dotfiles
 LIST_OF_APPS="dnsutils vim git tmux curl fish fzf"
 
@@ -186,12 +190,14 @@ echo "$dotfiles_logo"
 printf "${NORMAL}"
 
 newline
-read -p "$(warn '❗ Are you sure you want to install it? [y/N] ')" -n 1 -r
+if [[ ! $INSTALL_ANYWAY == "Yes" ]]; then
+  read -p "$(warn '❗ Are you sure you want to install it? [y/N] ')" -n 1 -r REP </dev/tty
 
-if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-  newline
-  error 'Installation canceled.'
-  exit 1
+  if [[ ! $REP =~ ^[Yy]$ ]]; then
+    newline
+    error 'Installation canceled.'
+    exit 1
+  fi
 fi
 
 newline
