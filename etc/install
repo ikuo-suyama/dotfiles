@@ -3,11 +3,13 @@
 trap 'echo Fatal Error: $0: line $LINENO: installation failed.; exit 1' ERR INT
 set -euo pipefail
 
+# globals
 if [ -z "${DOTPATH:-}" ]; then
   DOTPATH=~/.dotfiles
   export DOTPATH
 fi
 DOTFILES_GITHUB=https://github.com/ikuo-suyama/dotfiles
+LIST_OF_APPS="dnsutils vim git tmux curl fish fzf"
 
 # use colors on terminal
 tput=$(which tput)
@@ -66,6 +68,11 @@ is_exists() {
   return $?
 }
 
+is_xcode_installed() {
+  xcode-select -p 1>/dev/null
+  return $?
+}
+
 # installer
 dotfiles_download() {
   if [ -d "$DOTPATH" ]; then
@@ -105,7 +112,7 @@ dotfiles_download() {
 
 dotfiles_deploy() {
   newline
-  info "✍ Deploying dotfiles..."
+  info "🚛 Deploying dotfiles..."
 
   if [ ! -d $DOTPATH ]; then
     error "💥 $DOTPATH: not found"
@@ -117,6 +124,45 @@ dotfiles_deploy() {
   make deploy
   newline
   info "✅ ...Deploied."
+}
+
+install_packages() {
+  ## install packages
+  newline
+  info "⛏ Installing packages..."
+
+  if [[ $(uname) = "Linux" ]]; then
+    ## Ubuntu / Debian
+    if [ -f /etc/debian_version ] || [ -f /etc/debian_release ]; then
+      info "💾 sudo apt update"
+      sudo apt update -q
+
+      info "💾 sudo apt install $LIST_OF_APPS"
+      sudo apt install -q -y $LIST_OF_APPS
+    fi
+    ## TODO: apilne
+
+  elif [[ $(uname) = "Darwin" ]]; then
+    if ! is_xcode_installed; then
+      info "💾 xcode-select --install"
+      xcode-select --install
+    fi
+
+    if ! hash brew 2>/dev/null; then
+      info "❗ Homebrew is not instaled. Installing..."
+      /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+      brew tap caskroom/cask
+      brew cask --version
+    fi
+
+    ## TODO: install brew apps from Brewfile
+    # info "💾 brew install $LIST_OF_APPS"
+    # brew install $LIST_OF_APPS
+
+  else
+    error "💥 Your platform ($(uname -a)) is not supported."
+    exit 1
+  fi
 }
 
 ## Start installation
@@ -131,7 +177,7 @@ dotfiles_logo='
   1. Download my dotfiles from '$DOTFILES_GITHUB'
   2. Symlinking dotfiles to your home directory
   3. Install packages
-     for debian: [dnsutils vim git tmux curl fish]
+     for debian: ['$LIST_OF_APPS']
      for mac: [brew, @see etc/mac/Brewfile]
 '
 
@@ -151,8 +197,9 @@ fi
 newline
 info "👉 Start install the dotfiles."
 
-# dotfiles_download
+dotfiles_download
 dotfiles_deploy
-# install_packages
+install_packages
 
+newline
 info "✨ Installation completed. Enjoy!"
