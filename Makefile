@@ -2,7 +2,7 @@
 
 DOTPATH    := $(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 CANDIDATES := $(wildcard .??*)
-EXCLUSIONS := .DS_Store .git .gitmodules .github
+EXCLUSIONS := .DS_Store .git .gitmodules .github bin
 DOTFILES   := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
 
 #################################################################################
