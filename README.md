@@ -8,5 +8,5 @@ $ git clone git@github.com:ikuo-suyama/dotfiles.git
 2. install
 ```sh
 $ cd dotfiles
-$ make install
+$ make deploy
 ```

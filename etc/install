@@ -62,8 +62,8 @@ newline() {
 
 # utils
 is_exists() {
-    which "$1" >/dev/null 2>&1
-    return $?
+  which "$1" >/dev/null 2>&1
+  return $?
 }
 
 # installer
@@ -75,7 +75,7 @@ dotfiles_download() {
 
   newline
   info "🚀 Downloading dotfiles..."
-  if is_exists "gita"; then
+  if is_exists "git"; then
     git clone --recursive "$DOTFILES_GITHUB" "$DOTPATH"
 
   elif is_exists "curl" || is_exists "wget"; then
@@ -101,6 +101,22 @@ dotfiles_download() {
 
   info "✅ ...Downloaded."
   newline
+}
+
+dotfiles_deploy() {
+  newline
+  info "✍ Deploying dotfiles..."
+
+  if [ ! -d $DOTPATH ]; then
+    error "💥 $DOTPATH: not found"
+    exit 1
+  fi
+
+  cd "$DOTPATH"
+
+  make deploy
+  newline
+  info "✅ ...Deploied."
 }
 
 ## Start installation
@@ -135,8 +151,8 @@ fi
 newline
 info "👉 Start install the dotfiles."
 
-dotfiles_download
-# dotfiles_deploy
+# dotfiles_download
+dotfiles_deploy
 # install_packages
 
 info "✨ Installation completed. Enjoy!"
