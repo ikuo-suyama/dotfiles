@@ -162,11 +162,12 @@ install_packages() {
     # info "💾 brew install $LIST_OF_APPS"
     # brew install $LIST_OF_APPS
 
-  info "✅ ...Installed."
   else
     error "💥 Your platform ($(uname -a)) is not supported."
     exit 1
   fi
+
+  info "✅ ...Installed."
 }
 
 ## Start installation
