@@ -1,4 +1,7 @@
 # dotfiles
+[![Test Installation](https://github.com/ikuo-suyama/dotfiles/workflows/Test%20Installation/badge.svg)](https://github.com/ikuo-suyama/dotfiles/actions?query=workflow%3A%22Test+Installation%22)
+[![Test Installation via Https](https://github.com/ikuo-suyama/dotfiles/workflows/Test%20Installation%20via%20Https/badge.svg)](https://github.com/ikuo-suyama/dotfiles/actions?query=workflow%3A%22Test+Installation+via+Https%22) 
+
 ![](https://raw.github.com/ikuo-suyama/dotfiles/images/terminal.png)
 
 ## Installation
