@@ -7,7 +7,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-       os: [ubuntu-latest, macos-latest]
+       os: [ubuntu-latest, ubuntu-20.04, macos-latest]
       fail-fast: false
     env:
       TERM: screen-256color

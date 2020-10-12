@@ -24,7 +24,7 @@ if [ -n "$(which tput)" ]; then
   tput=$(which tput)
   ncolors=$($tput colors)
 fi
-if [ -t 1 ] && [ -v ncolors ] && [ "$ncolors" -ge 8 ]; then
+if [ -t 1 ] && [ -n "${ncolors:-}" ] && [ "${ncolors:-0}" -ge 8 ]; then
   RED="$(tput setaf 1)"
   GREEN="$(tput setaf 2)"
   YELLOW="$(tput setaf 3)"
@@ -82,7 +82,56 @@ is_xcode_installed() {
 }
 
 package_available() {
-    return dpkg -l "$1" &> /dev/null
+  return dpkg -l "$1" &>/dev/null
+}
+
+install_packages_ubuntu() {
+  info "💾 sudo apt update"
+  sudo apt update -q
+
+  info "💾 sudo apt install $LIST_OF_APPS"
+  if package_available "fzf"; then
+    sudo apt install -q -y $LIST_OF_APPS
+  else
+    sudo apt install -q -y $LIST_OF_APPS_UBUNTU_18
+
+    info "💾 install fzf"
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install --bin
+  fi
+}
+
+install_packages_stretch() {
+  info "💾 apt update"
+  apt update -q
+
+  info "💾 apt install $LIST_OF_APPS"
+  apt install -q -y $LIST_OF_APPS
+}
+
+install_packages_alpine() {
+  info "💾 apk update"
+  apk update
+
+  info "💾 apk add $LIST_OF_APPS_ALPINE"
+  apk add $LIST_OF_APPS_ALPINE
+}
+
+install_packages_mac() {
+  if ! is_xcode_installed; then
+    info "💾 xcode-select --install"
+    xcode-select --install
+  fi
+
+  if ! hash brew 2>/dev/null; then
+    info "❗ Homebrew is not instaled. Installing..."
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    brew tap caskroom/cask
+    brew cask --version
+  fi
+
+  info "💾 brew install $LIST_OF_APPS_MAC"
+  brew install $LIST_OF_APPS_MAC
 }
 
 # installer
@@ -92,56 +141,22 @@ install_packages() {
   info "⛏ Installing packages..."
 
   if [[ $(uname) = "Linux" ]]; then
-    ## Ubuntu / Debian
     if [ -f /etc/debian_version ] || [ -f /etc/debian_release ]; then
       if is_exists "sudo"; then
-        info "💾 sudo apt update"
-        sudo apt update -q
-
-        info "💾 sudo apt install $LIST_OF_APPS"
-        if package_available "fzf"; then
-          sudo apt install -q -y $LIST_OF_APPS
-        else 
-          sudo apt install -q -y $LIST_OF_APPS_UBUNTU_18
-
-          info "💾 install fzf"
-          git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-          ~/.fzf/install --bin
-        fi
+        ## Ubuntu / Debian
+        install_packages_ubuntu
       else
         ## Docker Image e.g. stretch
-        info "💾 apt update"
-        apt update -q
-
-        info "💾 apt install $LIST_OF_APPS"
-        apt install -q -y $LIST_OF_APPS 
+        install_packages_stretch
       fi
-
-    ## Alpine
     elif [ -f /etc/alpine-release ]; then
-      info "💾 apk update"
-      apk update
-
-      info "💾 apk add $LIST_OF_APPS_ALPINE"
-      apk add $LIST_OF_APPS_ALPINE 
+      ## Alpine
+      install_packages_alpine
     fi
 
   elif [[ $(uname) = "Darwin" ]]; then
-    if ! is_xcode_installed; then
-      info "💾 xcode-select --install"
-      xcode-select --install
-    fi
-
-    if ! hash brew 2>/dev/null; then
-      info "❗ Homebrew is not instaled. Installing..."
-      /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-      brew tap caskroom/cask
-      brew cask --version
-    fi
-
-    info "💾 brew install $LIST_OF_APPS_MAC"
-    brew install $LIST_OF_APPS_MAC
-
+    # MacOS
+    install_packages_mac
   else
     error "💥 Your platform ($(uname -a)) is not supported."
     exit 1
@@ -166,10 +181,8 @@ dotfiles_download() {
     local tarball="https://github.com/ikuo-suyama/dotfiles/archive/master.tar.gz"
     if is_exists "curl"; then
       curl -L "$tarball"
-
     elif is_exists "wget"; then
       wget -O - "$tarball"
-
     fi | tar xvz
     if [ ! -d dotfiles-master ]; then
       error "💥 Downloaded dir: dotfiles-master does not found"
