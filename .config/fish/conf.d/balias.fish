@@ -26,3 +26,8 @@ balias kcx 'kubectx'
 balias kg 'kubectl get'
 balias kgp 'kubectl get po'
 balias kgs 'kubectl get svc'
+
+# tmux
+balias t 'tmux'
+balias ta 'tmux a'
+balias td 'tmux detach-client'
