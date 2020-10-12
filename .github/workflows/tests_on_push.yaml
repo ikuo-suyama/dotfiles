@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Run Installation
         run: |
-          apk update & apk install curl
+          apk add curl bash
           curl -fsSL https://raw.githubusercontent.com/ikuo-suyama/dotfiles/master/etc/install | /bin/sh
       - name: Use fish
         run: |

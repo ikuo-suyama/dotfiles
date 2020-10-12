@@ -15,6 +15,7 @@ fi
 DOTFILES_GITHUB=https://github.com/ikuo-suyama/dotfiles
 
 LIST_OF_APPS="build-essential dnsutils vim git tmux curl fish fzf"
+LIST_OF_APPS_UBUNTU_18="build-essential dnsutils vim git tmux curl fish"
 LIST_OF_APPS_ALPINE="alpine-sdk bind-tools ncurses vim git tmux curl fish fzf"
 LIST_OF_APPS_MAC="coreutils fish tmux git vim fzf"
 
@@ -80,6 +81,10 @@ is_xcode_installed() {
   return $?
 }
 
+package_available() {
+    return dpkg -l "$1" &> /dev/null
+}
+
 # installer
 install_packages() {
   ## install packages
@@ -94,12 +99,15 @@ install_packages() {
         sudo apt update -q
 
         info "💾 sudo apt install $LIST_OF_APPS"
-        sudo apt install -q -y $LIST_OF_APPS
+        if package_available "fzf"; then
+          sudo apt install -q -y $LIST_OF_APPS
+        else 
+          sudo apt install -q -y $LIST_OF_APPS_UBUNTU_18
 
-        # install fzf
-        # git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-        # ~/.fzf/install --bin
-
+          info "💾 install fzf"
+          git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+          ~/.fzf/install --bin
+        fi
       else
         ## Docker Image e.g. stretch
         info "💾 apt update"
