@@ -13,7 +13,8 @@ if [ -z "${INSTALL_ANYWAY:-}" ]; then
   export INSTALL_ANYWAY
 fi
 DOTFILES_GITHUB=https://github.com/ikuo-suyama/dotfiles
-LIST_OF_APPS="build-essential dnsutils vim git tmux curl fish fzf"
+LIST_OF_APPS="build-essential dnsutils vim git tmux curl fish"
+ADDITIONAL_APP="fzf"
 
 # use colors on terminal
 tput=$(which tput)
@@ -78,6 +79,60 @@ is_xcode_installed() {
 }
 
 # installer
+install_packages() {
+  ## install packages
+  newline
+  info "⛏ Installing packages..."
+
+  if [[ $(uname) = "Linux" ]]; then
+    ## Ubuntu / Debian
+    if [ -f /etc/debian_version ] || [ -f /etc/debian_release ]; then
+      if is_exists "sudo"; then
+        info "💾 sudo apt update"
+        sudo apt update -q
+
+        info "💾 sudo apt install $LIST_OF_APPS"
+        sudo apt install -q -y $LIST_OF_APPS
+      else
+        ## Docker Image e.g. stretch
+        info "💾 apt update"
+        apt update -q
+
+        info "💾 apt install $LIST_OF_APPS"
+        apt install -q -y $LIST_OF_APPS 
+      fi
+
+      # install fzf
+      git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+      ~/.fzf/install --bin
+    fi
+    ## TODO: apilne
+
+  elif [[ $(uname) = "Darwin" ]]; then
+    if ! is_xcode_installed; then
+      info "💾 xcode-select --install"
+      xcode-select --install
+    fi
+
+    if ! hash brew 2>/dev/null; then
+      info "❗ Homebrew is not instaled. Installing..."
+      /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+      brew tap caskroom/cask
+      brew cask --version
+    fi
+
+    ## TODO: install brew apps from Brewfile
+    # info "💾 brew install $LIST_OF_APPS"
+    # brew install $LIST_OF_APPS
+
+  else
+    error "💥 Your platform ($(uname -a)) is not supported."
+    exit 1
+  fi
+
+  info "✅ ...Installed."
+}
+
 dotfiles_download() {
   if [ -d "$DOTPATH" ]; then
     error "💥 $DOTPATH: already exists"
@@ -129,56 +184,6 @@ dotfiles_deploy() {
   info "✅ ...Deploied."
 }
 
-install_packages() {
-  ## install packages
-  newline
-  info "⛏ Installing packages..."
-
-  if [[ $(uname) = "Linux" ]]; then
-    ## Ubuntu / Debian
-    if [ -f /etc/debian_version ] || [ -f /etc/debian_release ]; then
-      if is_exists "sudo"; then
-        info "💾 sudo apt update"
-        sudo apt update -q
-
-        info "💾 sudo apt install $LIST_OF_APPS"
-        sudo apt install -q -y $LIST_OF_APPS
-      else
-        ## Docker Image e.g. stretch
-        info "💾 apt update"
-        apt update -q
-
-        info "💾 apt install $LIST_OF_APPS"
-        apt install -q -y $LIST_OF_APPS 
-      fi
-    fi
-    ## TODO: apilne
-
-  elif [[ $(uname) = "Darwin" ]]; then
-    if ! is_xcode_installed; then
-      info "💾 xcode-select --install"
-      xcode-select --install
-    fi
-
-    if ! hash brew 2>/dev/null; then
-      info "❗ Homebrew is not instaled. Installing..."
-      /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-      brew tap caskroom/cask
-      brew cask --version
-    fi
-
-    ## TODO: install brew apps from Brewfile
-    # info "💾 brew install $LIST_OF_APPS"
-    # brew install $LIST_OF_APPS
-
-  else
-    error "💥 Your platform ($(uname -a)) is not supported."
-    exit 1
-  fi
-
-  info "✅ ...Installed."
-}
-
 ## Start installation
 dotfiles_logo='
                            __  _       __                             
@@ -191,7 +196,7 @@ dotfiles_logo='
   1. Download my dotfiles from '$DOTFILES_GITHUB'
   2. Symlinking dotfiles to your home directory
   3. Install packages
-     for debian: ['$LIST_OF_APPS']
+     for debian: ['$LIST_OF_APPS' '$ADDITIONAL_APP']
      for mac: [brew, @see etc/mac/Brewfile]
 '
 
