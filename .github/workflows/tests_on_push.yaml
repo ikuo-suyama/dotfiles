@@ -3,9 +3,11 @@ name: Test Installation
 on: push
 
 jobs:
-  test-installation:
-    runs-on: ubuntu-latest
-
+  test-installation-on-host:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+       os: [ubuntu-latest, mac-latest]
     env:
       TERM: screen-256color
       INSTALL_ANYWAY: Yes
@@ -25,3 +27,27 @@ jobs:
         run: |
           fish
 
+  test-installation-on-docker:
+    runs-on: ubuntu-latest
+    container: ${{ matrix.image }}
+    strategy:
+      matrix:
+       image: [alpine, debian] 
+    env:
+      TERM: screen-256color
+      INSTALL_ANYWAY: Yes
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # for debugging...
+      # - name: Setup tmate session
+        # uses: mxschmitt/action-tmate@v1
+
+      - name: Run Installation
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/ikuo-suyama/dotfiles/master/etc/install | /bin/bash
+      
+      - name: Use fish
+        run: |
+          fish
