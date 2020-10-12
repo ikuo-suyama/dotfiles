@@ -53,7 +53,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Run Installation
         run: |
-          apt update & apt install curl
+          apt update && apt install -y curl
           curl -fsSL https://raw.githubusercontent.com/ikuo-suyama/dotfiles/master/etc/install | /bin/bash
       - name: Use fish
         run: |

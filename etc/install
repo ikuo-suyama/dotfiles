@@ -122,9 +122,29 @@ install_packages() {
       info "💾 apk update"
       apk update
 
-      info "💾 apk install $LIST_OF_APPS_ALPINE"
+      info "💾 apk add $LIST_OF_APPS_ALPINE"
       apk add $LIST_OF_APPS_ALPINE 
     fi
+
+  elif [[ $(uname) = "Darwin" ]]; then
+    if ! is_xcode_installed; then
+      info "💾 xcode-select --install"
+      xcode-select --install
+    fi
+
+    if ! hash brew 2>/dev/null; then
+      info "❗ Homebrew is not instaled. Installing..."
+      /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+      brew tap caskroom/cask
+      brew cask --version
+    fi
+
+    info "💾 brew install $LIST_OF_APPS_MAC"
+    brew install $LIST_OF_APPS_MAC
+
+  else
+    error "💥 Your platform ($(uname -a)) is not supported."
+    exit 1
   fi
 
   info "✅ ...Installed."
@@ -219,4 +239,4 @@ dotfiles_download
 dotfiles_deploy
 
 newline
-info "✨ Installation succeeded. Enjoy!"
+info "✨ Installation succeeded. go 'fish' and Enjoy!"
