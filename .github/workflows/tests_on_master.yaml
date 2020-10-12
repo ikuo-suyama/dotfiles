@@ -1,6 +1,9 @@
 name: Test Installation
 
-on: pull_request
+on:
+   push:
+    branches:
+      - master
 
 jobs:
   test-installation-on-host:
@@ -20,7 +23,7 @@ jobs:
         # uses: mxschmitt/action-tmate@v1
       - name: Run Installation
         run: |
-          cat etc/install | bash
+          curl -fsSL https://raw.githubusercontent.com/ikuo-suyama/dotfiles/master/etc/install | /bin/bash
       - name: Use fish
         run: |
           fish
@@ -37,7 +40,7 @@ jobs:
       - name: Run Installation
         run: |
           apk add curl bash
-          cat etc/install | bash
+          curl -fsSL https://raw.githubusercontent.com/ikuo-suyama/dotfiles/master/etc/install | /bin/sh
       - name: Use fish
         run: |
           fish
@@ -54,7 +57,7 @@ jobs:
       - name: Run Installation
         run: |
           apt update && apt install -y curl
-          cat etc/install | bash
+          curl -fsSL https://raw.githubusercontent.com/ikuo-suyama/dotfiles/master/etc/install | /bin/bash
       - name: Use fish
         run: |
           fish
