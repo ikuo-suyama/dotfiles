@@ -13,17 +13,17 @@ if [ -z "${INSTALL_ANYWAY:-}" ]; then
   export INSTALL_ANYWAY
 fi
 DOTFILES_GITHUB=https://github.com/ikuo-suyama/dotfiles
-LIST_OF_APPS="build-essential dnsutils vim git tmux curl fish"
-LIST_OF_APPS_ALPINE="alpine-sdk bind-tools vim git tmux curl fish"
-LIST_OF_APPS_MAC="coreutils fish tmux git vim"
-ADDITIONAL_APP="fzf"
+
+LIST_OF_APPS="build-essential dnsutils vim git tmux curl fish fzf"
+LIST_OF_APPS_ALPINE="alpine-sdk bind-tools ncurses vim git tmux curl fish fzf"
+LIST_OF_APPS_MAC="coreutils fish tmux git vim fzf"
 
 # use colors on terminal
-tput=$(which tput)
-if [ -n "$tput" ]; then
+if [ -n "$(which tput)" ]; then
+  tput=$(which tput)
   ncolors=$($tput colors)
 fi
-if [ -t 1 ] && [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
+if [ -t 1 ] && [ -v ncolors ] && [ "$ncolors" -ge 8 ]; then
   RED="$(tput setaf 1)"
   GREEN="$(tput setaf 2)"
   YELLOW="$(tput setaf 3)"
@@ -95,6 +95,11 @@ install_packages() {
 
         info "💾 sudo apt install $LIST_OF_APPS"
         sudo apt install -q -y $LIST_OF_APPS
+
+        # install fzf
+        # git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+        # ~/.fzf/install --bin
+
       else
         ## Docker Image e.g. stretch
         info "💾 apt update"
@@ -112,11 +117,6 @@ install_packages() {
       info "💾 apk install $LIST_OF_APPS_ALPINE"
       apk add $LIST_OF_APPS_ALPINE 
     fi
-
-    # install fzf
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    ~/.fzf/install --bin
-    exit 1
   fi
 
   info "✅ ...Installed."
@@ -184,7 +184,7 @@ dotfiles_logo='
   1. Download my dotfiles from '$DOTFILES_GITHUB'
   2. Symlinking dotfiles to your home directory
   3. Install packages
-     for debian: ['$LIST_OF_APPS' '$ADDITIONAL_APP']
+     for debian: ['$LIST_OF_APPS']
      for mac: [brew, '$LIST_OF_APPS_MAC']
 '
 

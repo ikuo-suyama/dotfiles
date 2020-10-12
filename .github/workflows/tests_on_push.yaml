@@ -8,6 +8,7 @@ jobs:
     strategy:
       matrix:
        os: [ubuntu-latest, macos-latest]
+      fail-fast: false
     env:
       TERM: screen-256color
       INSTALL_ANYWAY: Yes
