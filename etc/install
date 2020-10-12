@@ -14,6 +14,7 @@ if [ -z "${INSTALL_ANYWAY:-}" ]; then
 fi
 DOTFILES_GITHUB=https://github.com/ikuo-suyama/dotfiles
 LIST_OF_APPS="build-essential dnsutils vim git tmux curl fish"
+LIST_OF_APPS_ALPINE="alpine-sdk bind-tools vim git tmux curl fish"
 LIST_OF_APPS_MAC="coreutils fish tmux git vim"
 ADDITIONAL_APP="fzf"
 
@@ -103,30 +104,18 @@ install_packages() {
         apt install -q -y $LIST_OF_APPS 
       fi
 
-      # install fzf
-      git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-      ~/.fzf/install --bin
-    fi
-    ## TODO: apilne
+    ## Alpine
+    elif [ -f /etc/alpine-release ]; then
+      info "💾 apk update"
+      apk update
 
-  elif [[ $(uname) = "Darwin" ]]; then
-    if ! is_xcode_installed; then
-      info "💾 xcode-select --install"
-      xcode-select --install
+      info "💾 apk install $LIST_OF_APPS_ALPINE"
+      apk add $LIST_OF_APPS_ALPINE 
     fi
 
-    if ! hash brew 2>/dev/null; then
-      info "❗ Homebrew is not instaled. Installing..."
-      /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-      brew tap caskroom/cask
-      brew cask --version
-    fi
-
-    info "💾 brew install $LIST_OF_APPS_MAC"
-    brew install -y $LIST_OF_APPS_MAC
-
-  else
-    error "💥 Your platform ($(uname -a)) is not supported."
+    # install fzf
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install --bin
     exit 1
   fi
 
