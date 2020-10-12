@@ -23,7 +23,7 @@ jobs:
         # uses: mxschmitt/action-tmate@v1
       - name: Run Installation
         run: |
-          curl -fsSL https://raw.githubusercontent.com/ikuo-suyama/dotfiles/master/etc/install | /bin/bash
+          curl -fsSL dot.martinloverse.dev | bash
       - name: Use fish
         run: |
           fish
@@ -40,7 +40,7 @@ jobs:
       - name: Run Installation
         run: |
           apk add curl bash
-          curl -fsSL https://raw.githubusercontent.com/ikuo-suyama/dotfiles/master/etc/install | /bin/sh
+          curl -fsSL dot.martinloverse.dev | bash
       - name: Use fish
         run: |
           fish
@@ -57,7 +57,7 @@ jobs:
       - name: Run Installation
         run: |
           apt update && apt install -y curl
-          curl -fsSL https://raw.githubusercontent.com/ikuo-suyama/dotfiles/master/etc/install | /bin/bash
+          curl -fsSL dot.martinloverse.dev | bash
       - name: Use fish
         run: |
           fish
