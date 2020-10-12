@@ -13,7 +13,7 @@ if [ -z "${INSTALL_ANYWAY:-}" ]; then
   export INSTALL_ANYWAY
 fi
 DOTFILES_GITHUB=https://github.com/ikuo-suyama/dotfiles
-LIST_OF_APPS="dnsutils vim git tmux curl fish fzf"
+LIST_OF_APPS="build-essential dnsutils vim git tmux curl fish fzf"
 
 # use colors on terminal
 tput=$(which tput)
@@ -137,11 +137,20 @@ install_packages() {
   if [[ $(uname) = "Linux" ]]; then
     ## Ubuntu / Debian
     if [ -f /etc/debian_version ] || [ -f /etc/debian_release ]; then
-      info "💾 sudo apt update"
-      sudo apt update -q
+      if is_exists "sudo"; then
+        info "💾 sudo apt update"
+        sudo apt update -q
 
-      info "💾 sudo apt install $LIST_OF_APPS"
-      sudo apt install -q -y $LIST_OF_APPS
+        info "💾 sudo apt install $LIST_OF_APPS"
+        sudo apt install -q -y $LIST_OF_APPS
+      else
+        ## Docker Image e.g. stretch
+        info "💾 apt update"
+        apt update -q
+
+        info "💾 apt install $LIST_OF_APPS"
+        apt install -q -y $LIST_OF_APPS 
+      fi
     fi
     ## TODO: apilne
 
@@ -202,11 +211,11 @@ if [[ ! $INSTALL_ANYWAY == "Yes" ]]; then
 fi
 
 newline
-info "👉 Start install the dotfiles."
+info "👉 Start install the environment."
 
+install_packages
 dotfiles_download
 dotfiles_deploy
-install_packages
 
 newline
 info "✨ Installation succeeded. Enjoy!"

@@ -1,6 +1,8 @@
 # utils
 balias ll 'ls -lha'
-balias date 'gdate'
+if type -q $gdate
+  balias date 'gdate'
+end
 
 # git
 balias g 'git'
