@@ -1,5 +1,5 @@
 ## dotfiles
-![](terminal2.png)
+![](https://raw.github.com/ikuo-suyama/dotfiles/images/terminal.png)
 
 ### Installation
 ```sh
