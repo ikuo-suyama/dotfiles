@@ -1,0 +1,23 @@
+name: Test Installation
+
+on: push
+
+jobs:
+  test-installation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # for debugging...
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v1
+
+      - name: Run Installation
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/ikuo-suyama/dotfiles/master/etc/install | /bin/bash
+      
+      - name: Use fish
+        run: |
+          fish
+

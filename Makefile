@@ -1,8 +1,8 @@
 .PHONY: list
 
 DOTPATH    := $(realpath $(dir $(lastword $(MAKEFILE_LIST))))
-CANDIDATES := $(wildcard .??*)
-EXCLUSIONS := .DS_Store .git .gitmodules .github bin
+CANDIDATES := $(wildcard .??*) bin
+EXCLUSIONS := .DS_Store .git .gitmodules .github
 DOTFILES   := $(filter-out $(EXCLUSIONS), $(CANDIDATES))
 
 #################################################################################
