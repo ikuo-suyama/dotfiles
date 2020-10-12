@@ -5,6 +5,10 @@ on: push
 jobs:
   test-installation:
     runs-on: ubuntu-latest
+
+    env:
+      TERM: screen-256color
+      INSTALL_ANYWAY: Yes
     steps:
       - name: Checkout code
         uses: actions/checkout@v2

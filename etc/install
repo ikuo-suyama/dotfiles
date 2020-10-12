@@ -9,7 +9,7 @@ if [ -z "${DOTPATH:-}" ]; then
   export DOTPATH
 fi
 if [ -z "${INSTALL_ANYWAY:-}" ]; then
-  INSTALL_ANYWAY=NO
+  INSTALL_ANYWAY=No
   export INSTALL_ANYWAY
 fi
 DOTFILES_GITHUB=https://github.com/ikuo-suyama/dotfiles
