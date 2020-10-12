@@ -1,5 +1,5 @@
 ## dotfiles
-
+![](terminal2.png)
 
 ### Installation
 ```sh
@@ -24,7 +24,7 @@ $ make deploy
 
 ### What's Inside
 - fish
-  - fisher
+  - fisher plugins
     - 0rax/fish-bd
     - edc/bass
     - evanlucas/fish-kubectl-completions
@@ -37,3 +37,9 @@ $ make deploy
 - tmux
 - vim
 - fzf
+
+### Supported Environments
+- Mac OSX < 10.15
+- Ubuntu < 18.04
+- Debian Image
+- Alpine Image
