@@ -14,6 +14,7 @@ if [ -z "${INSTALL_ANYWAY:-}" ]; then
 fi
 DOTFILES_GITHUB=https://github.com/ikuo-suyama/dotfiles
 LIST_OF_APPS="build-essential dnsutils vim git tmux curl fish"
+LIST_OF_APPS_MAC="coreutils fish tmux git vim"
 ADDITIONAL_APP="fzf"
 
 # use colors on terminal
@@ -121,9 +122,8 @@ install_packages() {
       brew cask --version
     fi
 
-    ## TODO: install brew apps from Brewfile
-    # info "💾 brew install $LIST_OF_APPS"
-    # brew install $LIST_OF_APPS
+    info "💾 brew install $LIST_OF_APPS_MAC"
+    brew install -y $LIST_OF_APPS_MAC
 
   else
     error "💥 Your platform ($(uname -a)) is not supported."
@@ -196,7 +196,7 @@ dotfiles_logo='
   2. Symlinking dotfiles to your home directory
   3. Install packages
      for debian: ['$LIST_OF_APPS' '$ADDITIONAL_APP']
-     for mac: [brew, @see etc/mac/Brewfile]
+     for mac: [brew, '$LIST_OF_APPS_MAC']
 '
 
 printf "${BOLD}"

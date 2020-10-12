@@ -7,7 +7,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-       os: [ubuntu-latest, mac-latest]
+       os: [ubuntu-latest, macos-latest]
     env:
       TERM: screen-256color
       INSTALL_ANYWAY: Yes
@@ -32,7 +32,8 @@ jobs:
     container: ${{ matrix.image }}
     strategy:
       matrix:
-       image: [alpine, debian] 
+      #  image: [alpine, debian] 
+       image: [debian] 
     env:
       TERM: screen-256color
       INSTALL_ANYWAY: Yes
@@ -46,6 +47,7 @@ jobs:
 
       - name: Run Installation
         run: |
+          apt update & apt install curl
           curl -fsSL https://raw.githubusercontent.com/ikuo-suyama/dotfiles/master/etc/install | /bin/bash
       
       - name: Use fish
