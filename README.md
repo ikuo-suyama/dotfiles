@@ -1,28 +1,34 @@
-## dotfiles
+# dotfiles
 ![](https://raw.github.com/ikuo-suyama/dotfiles/images/terminal.png)
 
-### Installation
+## Installation
+```sh
+$ curl -fsSL dot.martinloverse.dev | bash
+```
+
+you need to bash & curl for installation.
 ```sh
 # for alpine
 $ apk add curl bash
 # for debian
 $ apt update && apt install -y curl
-$ curl -fsSL dot.martinloverse.dev | bash
 ```
 
-...or you can download & install manually by:
+...or, you can download & install manually by:
 1. download
 ```sh
-$ git clone git@github.com:ikuo-suyama/dotfiles.git
+$ git clone https://github.com/ikuo-suyama/dotfiles.git ~/.dotfiles
 ```
 
 2. install
 ```sh
-$ cd dotfiles
+$ cd ~/.dotfiles
+$ ./etc/install
+# or just symlink dotfiles without installing packages.
 $ make deploy
 ```
 
-### What's Inside
+## What's Inside
 - fish
   - fisher plugins
     - 0rax/fish-bd
@@ -38,7 +44,7 @@ $ make deploy
 - vim
 - fzf
 
-### Supported Environments
+## Supported Environments
 - Mac OSX < 10.15
 - Ubuntu < 18.04
 - Debian Image
