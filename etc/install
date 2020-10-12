@@ -166,7 +166,6 @@ dotfiles_download() {
   fi
 
   info "✅ ...Downloaded."
-  newline
 }
 
 dotfiles_deploy() {
