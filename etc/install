@@ -134,6 +134,14 @@ install_packages_mac() {
   brew install $LIST_OF_APPS_MAC
 }
 
+install_vim_plugin_manager() {
+  info "📝 install vim plugin manager(dein)"
+  curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+  mkdir -p ~/.cache/dein
+  bash ./installer.sh ~/.cache/dein
+  rm ./installer.sh
+}
+
 # installer
 install_packages() {
   ## install packages
@@ -161,6 +169,8 @@ install_packages() {
     error "💥 Your platform ($(uname -a)) is not supported."
     exit 1
   fi
+
+  install_vim_plugin_manager
 
   info "✅ ...Installed."
 }
