@@ -23,12 +23,24 @@ function fish_prompt
   set -l green (set_color green)
   set -l normal (set_color normal)
 
+  set -l white (set_color white)
+  set -l brblue (set_color brblue)
+
+  # user & host
+  if not set -q __fish_prompt_hostname
+    set -g __fish_prompt_hostname (hostname|cut -d . -f 1)
+  end
+  set -l current_user (whoami)
+
   set -l cwd $blue(pwd | sed "s:^$HOME:~:")
 
   # Output the prompt, left to right
 
   # Add a newline before new prompts
   echo -e ''
+
+  # Add user and hostname
+  echo -n -s $white$brblue$current_user$white'@'$cyan$__fish_prompt_hostname$white' in '
 
   # Display [venvname] if in a virtualenv
   if set -q VIRTUAL_ENV
