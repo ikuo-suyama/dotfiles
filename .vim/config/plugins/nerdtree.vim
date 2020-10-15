@@ -4,3 +4,6 @@
 " i	ファイルを水平分割して開く
 " s	ファイルを垂直分割して開く
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
+
+" 隠しファイルをデフォルトで表示する
+let g:NERDTreeShowHidden=1
