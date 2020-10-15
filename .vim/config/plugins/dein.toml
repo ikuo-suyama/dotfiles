@@ -9,3 +9,6 @@ repo = 'itchyny/lightline.vim'
 
 [[plugins]]
 repo = 'jacoborus/tender.vim'
+
+[[plugins]]
+repo = 'Xuyuanp/nerdtree-git-plugin'
