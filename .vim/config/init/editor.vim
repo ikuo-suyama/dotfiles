@@ -17,12 +17,6 @@ nnoremap <esc> :noh<return><esc>
 nnoremap <esc>^[ <esc>^[
 nnoremap <CR> :noh<CR><CR>
 
-" status line
-set laststatus=2
-set showmode
-set showcmd
-set ruler
-
 " tab / indent
 set expandtab
 set tabstop=2

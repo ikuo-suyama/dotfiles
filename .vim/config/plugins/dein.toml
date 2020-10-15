@@ -7,4 +7,5 @@ repo = 'scrooloose/nerdtree'
 [[plugins]]
 repo = 'itchyny/lightline.vim'
 
-
+[[plugins]]
+repo = 'jacoborus/tender.vim'
