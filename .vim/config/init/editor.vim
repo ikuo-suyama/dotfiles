@@ -2,7 +2,7 @@ filetype plugin indent on
 syntax on
 set encoding=utf-8
 
-inoremap <silent> jk <ESC>
+inoremap <Silent> jk <ESC>
 
 let mapleader = "\<Space>"
 set number
@@ -13,8 +13,8 @@ set ignorecase
 set smartcase 
 set hlsearch 
 " reset search hilight by enter/esc
-nnoremap <esc> :noh<return><esc>
-nnoremap <esc>^[ <esc>^[
+nnoremap <Esc> :noh<Return><Esc>
+nnoremap <Esc>^[ <Esc>^[
 nnoremap <CR> :noh<CR><CR>
 
 " tab / indent
@@ -26,3 +26,8 @@ set smartindent
 set shiftwidth=2
 
 :set directory=/tmp
+
+" insert newline by Enter
+nnoremap <CR> i<Return><Esc>^k
+" save file
+nnoremap <Leader>s :w<Return><Esc>
