@@ -14,10 +14,10 @@ if [ -z "${INSTALL_ANYWAY:-}" ]; then
 fi
 DOTFILES_GITHUB=https://github.com/ikuo-suyama/dotfiles
 
-LIST_OF_APPS="build-essential dnsutils vim git tmux curl fish fzf"
-LIST_OF_APPS_UBUNTU_18="build-essential dnsutils vim git tmux curl fish"
-LIST_OF_APPS_ALPINE="alpine-sdk bind-tools ncurses vim git tmux curl fish fzf"
-LIST_OF_APPS_MAC="coreutils fish tmux git vim fzf"
+LIST_OF_APPS="build-essential dnsutils vim git tmux curl fish fzf silversearcher-ag"
+LIST_OF_APPS_UBUNTU_18="build-essential dnsutils vim git tmux curl fish silversearcher-ag"
+LIST_OF_APPS_ALPINE="alpine-sdk bind-tools ncurses vim git tmux curl fish fzf the_silver_searcher"
+LIST_OF_APPS_MAC="coreutils fish tmux git vim fzf ag"
 
 # use colors on terminal
 if [ -n "$(which tput)" ]; then

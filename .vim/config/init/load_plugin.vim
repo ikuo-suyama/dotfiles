@@ -20,7 +20,7 @@ if dein#load_state(s:dein_dir)
   call dein#begin(s:dein_dir)
 
   " dein.toml, dein_layz.tomlファイルのディレクトリをセット
-  let s:toml_dir = expand('~/.vim/config/plugins')
+  let s:toml_dir = expand('~/.vim/dein')
 
   " 起動時に読み込むプラグイン群
   call dein#load_toml(s:toml_dir . '/dein.toml', {'lazy': 0})
