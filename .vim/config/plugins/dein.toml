@@ -5,18 +5,20 @@ repo = 'Shougo/dein.vim'
 repo = 'scrooloose/nerdtree'
 
 [[plugins]]
+repo = 'Xuyuanp/nerdtree-git-plugin'
+
+[[plugins]]
 repo = 'itchyny/lightline.vim'
 
 [[plugins]]
 repo = 'jacoborus/tender.vim'
 
 [[plugins]]
-repo = 'Xuyuanp/nerdtree-git-plugin'
-
-[[plugins]]
 repo = 'junegunn/fzf'
 build = './install --all'
  
-###fzf.vim
 [[plugins]]
 repo = 'junegunn/fzf.vim'
+
+[[plugins]]
+repo = 'tpope/vim-surround'
