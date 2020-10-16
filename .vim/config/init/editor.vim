@@ -31,3 +31,7 @@ set shiftwidth=2
 nnoremap <CR> i<Return><Esc>^k
 " save file
 nnoremap <Leader>s :w<Return><Esc>
+
+" create new window below
+set splitbelow
+set termwinsize=20x0
