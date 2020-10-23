@@ -8,9 +8,6 @@ nnoremap <silent><C-e> :NERDTreeTabsToggle<CR>
 " show hidden file by default
 let g:NERDTreeShowHidden=1
 
-" show nerdtree on start
-let g:nerdtree_tabs_open_on_console_startup=1
-
 " close nerdtree if there is no buffer
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q
 
