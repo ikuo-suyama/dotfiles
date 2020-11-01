@@ -1,9 +1,9 @@
-oh-my-fish/plugin-balias
-edc/bass
 0rax/fish-bd
+edc/bass
+evanlucas/fish-kubectl-completions
 fisherman/getopts
 fisherman/z
+ikuo-suyama/theme-clearance
 jethrokuan/fzf
 oh-my-fish/plugin-expand
-evanlucas/fish-kubectl-completions
-ikuo-suyama/theme-clearance
+oh-my-fish/plugin-balias
