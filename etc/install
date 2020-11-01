@@ -262,4 +262,4 @@ dotfiles_download
 dotfiles_deploy
 
 newline
-info "✨ Installation succeeded. go 'fish' and Enjoy!"
+info "✨ Installation succeeded. go 'fish' and exec 'fisher' for plugin installation. Enjoy!"
