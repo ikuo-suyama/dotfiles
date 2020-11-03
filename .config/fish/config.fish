@@ -4,6 +4,11 @@ if type -q anyenv
   eval (anyenv init - | source)
 end
 
+## direnv
+if type -q direnv
+  eval (direnv hook fish)
+end
+
 ## tssh
 funcsave tssh
 
@@ -18,3 +23,6 @@ set -x EDITOR "vim"
 
 ## expand-key filter
 set -x FILTER "fzf"
+
+## mysql-client
+set -g fish_user_paths "/usr/local/opt/mysql-client/bin" $fish_user_paths
