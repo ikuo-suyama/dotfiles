@@ -4,9 +4,21 @@ if type -q anyenv
   eval (anyenv init - | source)
 end
 
+set PATH -x $HOME/.cargo/bin $PATH
+
+## pyenv-vertualenv
+if type -q pyenv-virtualenv
+  eval (pyenv virtualenv-init - | source)
+end
+
 ## direnv
 if type -q direnv
   eval (direnv hook fish)
+end
+
+## starship
+if type -q starship
+  starship init fish | source
 end
 
 ## tssh

@@ -1,4 +1,5 @@
 inoremap <silent> jk <ESC>
 " insert newline by Enter
 nnoremap <CR> i<Return><Esc>^k
+set surround
 
