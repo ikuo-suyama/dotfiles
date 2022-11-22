@@ -125,7 +125,7 @@ install_packages_mac() {
 
   if ! hash brew 2>/dev/null; then
     info "❗ Homebrew is not instaled. Installing..."
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     brew tap caskroom/cask
     brew cask --version
   fi
