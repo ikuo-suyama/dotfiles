@@ -1,3 +1,8 @@
+## Brew
+if test -e /opt/homebrew/bin/brew
+  eval (/opt/homebrew/bin/brew shellenv)
+end
+
 ## anyenv
 if type -q anyenv
   set PATH -x $HOME/.anyenv/bin $PATH
