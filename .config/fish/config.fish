@@ -6,9 +6,9 @@ end
 
 set PATH -x $HOME/.cargo/bin $PATH
 
-## pyenv-vertualenv
-if type -q pyenv-virtualenv
-  eval (pyenv virtualenv-init - | source)
+## pyenv
+if type -q pyenv
+  eval (pyenv init - | source)
 end
 
 ## direnv

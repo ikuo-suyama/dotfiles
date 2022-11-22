@@ -28,6 +28,8 @@ balias kcx 'kubectx'
 balias kg 'kubectl get'
 balias kgp 'kubectl get po'
 balias kgs 'kubectl get svc'
+balias kd 'kubectl describe'
+balias kdp 'kubectl describe pods'
 
 # tmux
 balias t 'tmux'
