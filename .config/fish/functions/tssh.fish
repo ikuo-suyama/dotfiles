@@ -1,4 +1,3 @@
-# Defined in /Users/ikuo.suyama/.config/fish/functions/tssh.fish @ line 2
 function tssh
 	set hosts $argv
   set self %self
