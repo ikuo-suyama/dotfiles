@@ -138,7 +138,7 @@ install_packages_mac() {
 install_vim_plugin_manager() {
   info "📝 install vim plugin manager(dein)"
   mkdir -p ~/.cache/dein
-  curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+  curl https://raw.githubusercontent.com/Shougo/dein-installer.vim/master/installer.sh > installer.sh
   { echo 1 && echo 1; } | sh installer.sh
   rm ./installer.sh
 }
