@@ -17,7 +17,7 @@ DOTFILES_GITHUB=https://github.com/ikuo-suyama/dotfiles
 LIST_OF_APPS="build-essential dnsutils vim git tmux curl fish fzf silversearcher-ag"
 LIST_OF_APPS_UBUNTU_18="build-essential dnsutils vim git tmux curl fish silversearcher-ag"
 LIST_OF_APPS_ALPINE="alpine-sdk bind-tools ncurses vim git tmux curl fish fzf the_silver_searcher"
-LIST_OF_APPS_MAC="coreutils fish tmux git vim fzf ag"
+LIST_OF_APPS_MAC="coreutils fish tmux git vim fzf ag bundle"
 
 # use colors on terminal
 if [ -n "$(which tput)" ]; then
@@ -129,7 +129,6 @@ install_packages_mac() {
     echo '# Set PATH, MANPATH, etc., for Homebrew.' >> /Users/ikuo.suyama/.zprofile
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/ikuo.suyama/.zprofile
     eval "$(/opt/homebrew/bin/brew shellenv)"
-    brew tap homebrew/cask
   fi
 
   info "💾 brew install $LIST_OF_APPS_MAC"
